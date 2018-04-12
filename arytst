@@ -1,0 +1,31 @@
+#!/bin/bash
+
+color=(green blue orange red)
+a=coloranimals
+b=coloranimals2
+
+
+srtsys () {
+value=("$@")
+for i in "${value[@]}"; do
+	
+	cat $a $b $c | grep $i | cat > $i
+	
+done
+return
+}
+
+
+srtsys "${color[@]}"
+
+paste ${color[@]}
+
+
+
+#cat i
+
+#printf "%s	%s	%s \n--------------------------------------------- \n" green orange $c
+
+exit
+
+

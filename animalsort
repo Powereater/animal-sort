@@ -1,0 +1,59 @@
+#!/bin/bash
+
+#this will work currently for paste, but if you change it to adiffrent order (like red blue orange green) it messes it up
+color=(green blue orange red)
+
+srtsys () {
+value=$1
+for i in ${value[@]}; do
+	cat $a $b $c | grep $i | cat > i
+done
+
+return
+}
+
+echo "animalsort is here to try and sort animals and things into diffrenct catagories currently designed for 3 files at once
+
+"
+
+echo "enter the files to be used==>: "
+read a b c
+
+
+
+printf "%s	%s	%s \n--------------------------------------------- \n" $a $b $c
+#you dont actully need the -d and the giant space
+echo "$(paste -d '	' $a $b $c)"
+
+echo -n "
+
+select you preferred sorting system
+
+1. color
+2. species
+
+"
+read REPLY
+
+if [[ $REPLY =~ ^[1-2]$ ]]; then
+	if [[ $REPLY == 1 ]]; then
+		srtsys "${color[@]}"
+		#my current understanding of past in it's relation to forming columns is poor. It's very possible that i will change it, change it to a non txt file format and fuck it all up :(
+		paste "${color[@]}"
+		exit
+	fi
+	if [[ $REPLY == 2 ]]; then
+		echo "	NOT READY YET!!!"
+		exit
+	fi
+	
+else
+	echo "invalid, cant you read?" >&2
+	exit 1
+fi
+
+
+
+# can be made mre complex, with "intellignet" sorting according to what's displayed
+
+
