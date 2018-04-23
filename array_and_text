@@ -1,0 +1,32 @@
+#!/bin/bash
+
+echo "a simsple script to show hwo to chage array in order to maek them verticle and horizontal, etc
+"
+a=(b d f asd r g)
+echo 'this is the array a=(b d f asd r g)'
+
+echo -n 'what to do with this array?
+
+1.make it look vertical
+2.make it into text
+'
+
+read REPLY
+
+if [[ $REPLY =~ ^[1-2]$ ]]; then
+	if [[ $REPLY == 1 ]]; then
+		printf "%s\n" "${a[@]}"
+		exit
+	fi
+	if [[ $REPLY == 2 ]]; then
+		echo ${a[@]} | cat > array_and_text.txt
+		gedit array_and_text.txt
+		exit
+	fi
+	
+else
+	echo "invalid, cant you read?" >&2
+	exit 1
+fi
+
+
