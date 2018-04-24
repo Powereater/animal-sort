@@ -19,9 +19,31 @@ if [[ $REPLY =~ ^[1-2]$ ]]; then
 		exit
 	fi
 	if [[ $REPLY == 2 ]]; then
-		echo ${a[@]} | cat > array_and_text.txt
-		gedit array_and_text.txt
-		exit
+		echo ${a[@]} | cat > a_and_t.txt
+		gedit a_and_t.txt
+		echo -n 'convert it back to an array? but as new_a?
+1.yes
+2.no
+'
+read REPLY
+		if [[ $REPLY =~ ^[1-2]$ ]]; then
+			if [[ $REPLY == 1 ]]; then
+			echo "here is the new array"
+			new_a=($(cat array_and_text.txt))
+			echo ${new_a[@]}
+
+			
+			exit
+			fi
+			if [[ $REPLY == 2 ]]; then
+			echo "bye"
+			exit				
+			fi
+		else
+			echo "invalid, cant you read?" >&2
+			exit 1
+		fi
+		
 	fi
 	
 else
