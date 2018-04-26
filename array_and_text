@@ -1,9 +1,10 @@
 #!/bin/bash
 
-echo "a simsple script to show hwo to chage array in order to maek them verticle and horizontal, etc
+#this is messey as hell but it works as a simple demonstaration of changing arrays into both vertical and horizontal texts.i think this will be useful in the future when minipulating logs and shit
+echo "a simple script to show hwo to chage array in order to make them verticle and horizontal, etc
 "
-a=(b d f asd r g)
-echo 'this is the array a=(b d f asd r g)'
+a=("b" "d" "f asd" "r" "g")
+echo 'this is the array a=("b" "d" "f asd" "r" "g")'
 
 echo -n 'what to do with this array?
 
@@ -15,11 +16,58 @@ read REPLY
 
 if [[ $REPLY =~ ^[1-2]$ ]]; then
 	if [[ $REPLY == 1 ]]; then
+		#this dislay the array vertically, im still not currently sure if a vertical array "exists" but this is what i got
 		printf "%s\n" "${a[@]}"
-		exit
+		
+		echo -n 'converted into vertical text??
+1.yes
+2.no
+'
+read REPLY
+		if [[ $REPLY =~ ^[1-2]$ ]]; then
+			if [[ $REPLY == 1 ]]; then
+			#This "convert" a "vertical" array into a vertical text. i guess this is pretty close to horizontal array to vertical text direct.
+			printf "%s\n" "${a[@]}" | cat > a_and_t.txt
+			#shows you the text
+			gedit a_and_t.txt
+			echo -n 'convert it back to a horizontal array array array? but as new_a?
+1.yes
+2.no
+'
+read REPLY
+			if [[ $REPLY =~ ^[1-2]$ ]]; then
+				if [[ $REPLY == 1 ]]; then
+				echo "here is the new array"
+				#converts it back to a what it once was
+				readarray new_a < array_and_text.txt
+				echo ${new_a[@]}
+
+			
+				exit
+				fi
+				if [[ $REPLY == 2 ]]; then
+				echo "bye"
+				exit				
+				fi
+			else
+				echo "invalid, cant you read?" >&2
+				exit 1
+			fi
+			fi
+			if [[ $REPLY == 2 ]]; then
+				echo "bye"
+				exit				
+			fi
+		else
+			echo "invalid, cant you read?" >&2
+			exit 1
+		fi
+		
 	fi
 	if [[ $REPLY == 2 ]]; then
+		#converts it into a normal text. 
 		echo ${a[@]} | cat > a_and_t.txt
+		#shows text
 		gedit a_and_t.txt
 		echo -n 'convert it back to an array? but as new_a?
 1.yes
@@ -29,6 +77,7 @@ read REPLY
 		if [[ $REPLY =~ ^[1-2]$ ]]; then
 			if [[ $REPLY == 1 ]]; then
 			echo "here is the new array"
+			#turns it back into a horizontal array
 			new_a=($(cat array_and_text.txt))
 			echo ${new_a[@]}
 
@@ -50,5 +99,5 @@ else
 	echo "invalid, cant you read?" >&2
 	exit 1
 fi
-
+#overall there is only 4 diffrent thing showns here, but it's a useful learning excersize to help me build animal sort.
 
