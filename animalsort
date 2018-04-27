@@ -3,6 +3,8 @@
 #this will work currently for paste, but if you change it to adiffrent order (like red blue orange green) it messes it up
 color=(blue green orange red)
 
+
+
 srtsys () {
 #im pretty sure i went wrong somewhere here? im suppose to use 
 # value=$@ but it works anyway
@@ -14,7 +16,11 @@ done
 return
 }
 
+
+
+
 srtslct(){
+
 value=$@
 num=0
 for i in ${value[@]}; do
@@ -23,30 +29,38 @@ for i in ${value[@]}; do
 done
 
 return
-
 }
+
+
+
+
 #insert simple menu here
 simplemenudec () {
-value=$@
-if [[ $REPLY =~ ^[0-3]$ ]]; then
-	if [[ $REPLY == 1 ]]; then
-		echo "fart fart fart"
-		exit
-	fi
-	if [[ $REPLY == 2 ]]; then
-		echo $(date)
-		exit
-	fi
-	if [[ $REPLY == 3 ]]; then
-		echo "butt butt butt"
-		exit
-	fi
+		
+value=("$@")
+
+echo -n "which of the following selection would you like? 0-$((${#color[@]}-1))"
+read REPLY
+
+
+
+if [[ $REPLY =~ ^[0-${#value[@]}]$ ]]; then
+	cat $a $b $c | grep ${value[$REPLY]} | cat > New_file
+	echo "the selection have ven isolated to new_file"
+	gedit New_file
+	
+	
 else
 	echo "invalid, cant you read?" >&2
 	exit 1
 fi
 return
 }
+
+
+
+
+
 echo "animalsort is here to try and sort animals and things into diffrenct catagories currently designed for 3 files at once
 
 "
@@ -73,16 +87,13 @@ read REPLY
 if [[ $REPLY =~ ^[1-2]$ ]]; then
 	if [[ $REPLY == 1 ]]; then
 		srtsys "${color[@]}"
-		#my current understanding of past in it's relation to forming columns is poor. It's very possible that i will change it, change it to a non txt file format and fuck it all up :(
+		#my current understanding of past in it's relation to forming columns is poor. It's very possible that i will change it, change 		it to a non txt file format and fuck it all up :(
 		#woo i did it!!
-		paste "${color[@]}" | expand -t 30
+		paste "${color[@]}" | expand -t 20
 		echo ${color[@]}
 		
 		srtslct "${color[@]}"
-		echo -n "which of the following selection would you like? 0-$((${#color[@]}-1))
-		"
-		read REPLY
-
+		simplemenudec "${color[@]}"
 		exit
 	fi
 	if [[ $REPLY == 2 ]]; then
