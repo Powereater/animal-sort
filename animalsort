@@ -1,17 +1,26 @@
 #!/bin/bash
 
 #this will work currently for paste, but if you change it to adiffrent order (like red blue orange green) it messes it up
+#nvm fixed it
 color=(blue green orange red)
 
 
 
 srtsys () {
-#im pretty sure i went wrong somewhere here? im suppose to use 
-# value=$@ but it works anyway
-value=$1
+
+value=("$@")
+
 for i in ${value[@]}; do
-	cat $a $b $c | grep $i | cat > i
+#echo $i
+	cat $a $b $c | grep $i | cat > $i
+	cat $a $b $c | grep $i | cat > otherhold
+	cat otherhold >> other_comp
+	
 done
+
+cat $a $b $c other_comp | sort | uniq -u | cat > other
+rm other_comp otherhold
+
 
 return
 }
@@ -19,15 +28,18 @@ return
 
 
 
+
 srtslct(){
 
-value=$@
+value=("$@")
 num=0
 for i in ${value[@]}; do
+	
 	echo " $num . $i"
 	num=$(($num + 1))
 done
 
+echo " $num . others"
 return
 }
 
@@ -39,21 +51,29 @@ simplemenudec () {
 		
 value=("$@")
 
-echo -n "which of the following selection would you like? 0-$((${#color[@]}-1))"
+echo -n "which of the following selection would you like? 0-${#value[@]}"
 read REPLY
 
+num_of_optn=$((${#value[@]}-1))
 
 
-if [[ $REPLY =~ ^[0-${#value[@]}]$ ]]; then
-	cat $a $b $c | grep ${value[$REPLY]} | cat > New_file
-	echo "the selection have ven isolated to new_file"
-	gedit New_file
+if [[ $REPLY =~ ^[0-$num_of_optn]$ ]]; then
 	
+	cat $a $b $c | grep ${value[$REPLY]} | cat > New_file
+	
+elif [[ $REPLY == ${#value[@]} ]]; then
+	cat other > New_file
 	
 else
 	echo "invalid, cant you read?" >&2
 	exit 1
 fi
+
+
+
+echo "the selection have ven isolated to new_file"
+	gedit New_file
+
 return
 }
 
@@ -89,8 +109,8 @@ if [[ $REPLY =~ ^[1-2]$ ]]; then
 		srtsys "${color[@]}"
 		#my current understanding of past in it's relation to forming columns is poor. It's very possible that i will change it, change 		it to a non txt file format and fuck it all up :(
 		#woo i did it!!
-		paste "${color[@]}" | expand -t 20
-		echo ${color[@]}
+		paste "${color[@]}" other | expand -t 15
+		rm ${color[@]}
 		
 		srtslct "${color[@]}"
 		simplemenudec "${color[@]}"
