@@ -6,20 +6,26 @@ color=(blue green orange red)
 
 
 
+
 srtsys () {
 
 value=("$@")
+counter=0
+cat $a $b $c > "$counter hold"
 
 for i in ${value[@]}; do
-#echo $i
+	
 	cat $a $b $c | grep $i | cat > $i
-	cat $a $b $c | grep $i | cat > otherhold
-	cat otherhold >> other_comp
+	cat "$counter hold" | grep -v $i | cat > "$[$counter + 1] hold"
+	rm "$counter hold"
+	counter=$[$counter + 1]
+	
+	
 	
 done
 
-cat $a $b $c other_comp | sort | uniq -u | cat > other
-rm other_comp otherhold
+
+cat "$counter hold" > other
 
 
 return
