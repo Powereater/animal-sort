@@ -3,6 +3,7 @@
 #this will work currently for paste, but if you change it to adiffrent order (like red blue orange green) it messes it up
 #nvm fixed it
 color=(blue green orange red)
+animals=(fox bear dog moose duck)
 
 
 
@@ -123,7 +124,12 @@ if [[ $REPLY =~ ^[1-2]$ ]]; then
 		exit
 	fi
 	if [[ $REPLY == 2 ]]; then
-		echo "	NOT READY YET!!!"
+		srtsys "${animals[@]}"
+		paste "${animals[@]}" other | expand -t 15
+		rm ${animals[@]}
+		
+		srtslct "${animals[@]}"
+		simplemenudec "${animals[@]}"
 		exit
 	fi
 	
